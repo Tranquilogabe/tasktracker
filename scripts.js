@@ -54,4 +54,64 @@ function renderTasks(filter = 'all') {
     });
 }
 
+//adding a new task
+@param {string} description 
 
+function addTask(description) {
+    const task = {
+        id: Date.now(),
+        description,
+        status: 'pending'
+    };
+    tasks.push(task);
+    renderTasks();
+}
+
+//refreshing a task description
+
+@param {number} id //id da tarefa
+@param{string} newDescription
+
+function updateTask(id, newDescription) {
+    tasks = tasks.map(task => task.id === id ? { ...task, description: newDescription } : taks );
+    renderTasks();
+}
+
+
+@param {number} id
+
+function deleteTask(id) {
+    tasks = tasks.filter(task => task.id !== id);
+    renderTasks();
+
+
+    @param {number} id
+    @param {string} newStatus
+
+    function updateStrings(id, newStatus){
+        tasks = task.map(task => task.id === is ? {...task, status: newStatus } : task);
+        renderTasks();
+    }
+
+
+taskForm.addEventListener('submit', (e) => {
+    e.preventDefalut();
+    cont description = taskInput.ariaValueMax.trim();
+    if (description) {
+        addTask(description);
+        taskInput.value = ''; //clean after add
+    }
+});
+
+
+document.getElementById('allTasksBtn').addEventListener('click',() => renderTasks('all'));
+document.getElementById('doneTasksBtn').addEventListener('click',() => renderTasks('done'));
+document.getElementById('pendingTasksBtn').addEventListener('click',() => renderTasks('pending'));
+document.getElementById('inprogressTasksBtn').addEventListener('click',() => renderTasks('in-progress'));
+
+
+
+
+
+
+}
