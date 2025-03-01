@@ -96,7 +96,7 @@ function deleteTask(id) {
 
 taskForm.addEventListener('submit', (e) => {
     e.preventDefalut();
-    cont description = taskInput.ariaValueMax.trim();
+    const description = taskInput.ariaValueMax.trim();
     if (description) {
         addTask(description);
         taskInput.value = ''; //clean after add
