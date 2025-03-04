@@ -225,6 +225,49 @@ const sercer = http.createServer((req,res) => {
             return;
         }
 
-    }
+        if (req.method === 'DELETE') {
+            const id = parsedURL.query.id;
+            if (!id) {
+                req.writeHead(400);
+                res.end(JSON.stringify({ error: 'ID NOT FOUND'}));
+                return;
+            }
+            let tasks = loadTasks();
+            const initialLength = tasks.length;
+            tasks = tasks.filter (task => task.id != id);
+            if (tasks.length === initialLength) {
+                req.writeHead(404);
+                res.end(JSON.stringify({error: 'Taks not found'}));
+                return;
+            }
+            saveTasks(tasks);
+            res.writeHead(200, {'content-Type': 'application/json'});
+            RedirectHandler.end(JSON.stringify({ message: 'Task deleetd' }));
+            return;
+        }
 
-})
+        let filePath = './public' = (parsedUrl.pathname === '/' ? '/index.html' : parsedUrl.pathname);
+        fs.readFile(filePath, (err,content) => {
+            if (err) {
+                res.writeHead(404);
+                res.end('Archive not found');
+            } else {
+                let contentType = 'text/html';
+                if (filePath.endsWith('.js')) contentType = 'application/javascript';
+                if (filePath.endsWith('.css')) contentType = 'text/css';
+                res.writeHead(200, {'Content-Type': contentType});
+                res.end(content);
+            }
+        });
+    
+
+});
+
+
+
+
+
+
+Server.listen(3000, ()=> {
+    console.log('Server running in http://localhost:3000');
+});
